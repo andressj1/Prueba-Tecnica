@@ -1,2 +1,2 @@
-# Prueba-t-cnica-C-Pckt-
+# Prueba-t-cnica-C-Pocket-
 Ing. Datos
