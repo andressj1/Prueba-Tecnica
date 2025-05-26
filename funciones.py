@@ -49,16 +49,43 @@ def vovsnum(df, x_col, y_col):
                  labels={x_col: x_col, y_col: y_col})
     return fig
 
-##### Seleccion de variables 
-
-def sel_variables(modelos, X, y, threshold):
-    var_names_ac = np.array([])
-    for modelo in modelos:
-        modelo.fit(X, y)
-        sel = SelectFromModel(modelo, threshold=threshold, prefit=True)
-        var_names = X.columns[sel.get_support()]
-        var_names_ac = np.append(var_names_ac, var_names)
+def imputar_f (df,list_cat):  
+        
     
-    var_names_ac = np.unique(var_names_ac)  # Movido fuera del bucle para conservar todas las variables seleccionadas
+    df_c=df[list_cat]
+
+    df_n=df.loc[:,~df.columns.isin(list_cat)]
+
+    imputer_n=SimpleImputer(strategy='median')
+    imputer_c=SimpleImputer( strategy='most_frequent')
+
+    imputer_n.fit(df_n)
+    imputer_c.fit(df_c)
+    imputer_c.get_params()
+    imputer_n.get_params()
+
+    X_n=imputer_n.transform(df_n)
+    X_c=imputer_c.transform(df_c)
+
+
+    df_n=pd.DataFrame(X_n,columns=df_n.columns)
+    df_c=pd.DataFrame(X_c,columns=df_c.columns)
+    df_c.info()
+    df_n.info()
+
+    df =pd.concat([df_n,df_c],axis=1)
+    return df
+
+
+def sel_variables(modelos,X,y,threshold):
+    
+    var_names_ac=np.array([])
+    for modelo in modelos:
+        #modelo=modelos[i]
+        modelo.fit(X,y)
+        sel = SelectFromModel(modelo, prefit=True,threshold=threshold)
+        var_names= modelo.feature_names_in_[sel.get_support()]
+        var_names_ac=np.append(var_names_ac, var_names)
+        var_names_ac=np.unique(var_names_ac)
     
     return var_names_ac
