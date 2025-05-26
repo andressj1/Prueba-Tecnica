@@ -20,7 +20,7 @@ def vovsenc(df, x_col, y_col, color_col):
     # Crear el gráfico de barras
     fig = px.bar(counts, x=x_col, y=y_col, color=color_col, 
                  title=f'Distribución de {color_col} por {x_col}',
-                 labels={'Category': 'Categoría', 'Count': 'Cantidad de Empleados', 'Attrition': 'Attrition'})
+                 labels={'Category': 'Categoría', 'Count': 'Cantidad de Clientes', 'Attrition': 'Attrition'})
     fig.update_xaxes(tickvals=[1, 2, 3, 4, 5, 6])
     return fig
 
@@ -36,7 +36,7 @@ def vovsstr(df, x_col, y_col, color_col):
     # Crear el gráfico de barras
     fig = px.bar(counts, x=y_col, y=x_col, color=color_col, 
                  title=f'Distribución de {color_col} por {x_col}',
-                 labels={'Category': 'Categoría', 'Count': 'Cantidad de Empleados', 'Attrition': 'Attrition'},
+                 labels={'Category': 'Categoría', 'Count': 'Cantidad de Clientes', 'Attrition': 'Attrition'},
                  orientation='h',
                  color_discrete_map={'rf': 'red', 'rg': 'green', 'rh': 'blue'})  # Cambiar los colores aquí
     return fig
